@@ -188,7 +188,7 @@ def not_found(error=None):
 
 if __name__ == '__main__':
     os.system('celery -A server_flask.celery_app worker &')
-    os.system('redis-3.2.7/src/redis-server &')
+    os.system('redis\\redis-server.exe redis.windows.conf &')
     app.run(host='127.0.0.1', port=5000, debug=True)
 
 
