@@ -96,7 +96,8 @@ def respond(serviceUrl,channelId,replyToId,fromData,
                     "conversation": conversation
                     },
                     headers={
-                        "Authorization": authstr
+                        "Authorization": authstr,
+                        "Content-Type": "application/json"
                     }
     )
 
@@ -114,7 +115,7 @@ def initiateChat(data):
             data["channelId"],
             generalID,
             {"id": senderID, "name": "Bot"},
-            {"id":fromID},
+            {"id": fromID},
             message,
             "message",
             data["conversation"])
@@ -133,7 +134,7 @@ def respondToClient(data):
         data["channelId"],
         generalID,
         {"id": senderID, "name": "Bot"},
-        {"id": "default-user"},
+        {"id": data["from"]},
         result,
         "message",
         data["conversation"])
