@@ -22,19 +22,9 @@ def index():
     """Renders the home page which is the CNS of the web app currently, nothing pretty."""
     return render_template('index.html', title='pythonbot')
 
-#####################################################################
-# Microsoft Application secrets (from BF registration process)
-#####################################################################
-
-app_client_id = os.environ.get('APP_ID', '')
-app_client_secret = os.environ.get('APP_PASSWORD', '')
 
 #####################################################################
-# Create the Flask app
-#####################################################################
-
-#####################################################################
-# Add celery support for asynchronous behavior
+# Add celery support for asynchronous calls
 # (note: must also run celery worker and redis server for this example
 #   to work - see README/docs)
 #####################################################################
@@ -61,6 +51,14 @@ app.config.update(
     CELERY_RESULT_BACKEND='redis://localhost:6379'
 )
 celery_app = make_celery(app)
+
+#####################################################################
+# Microsoft Application secrets (from BF registration process)
+#####################################################################
+
+app_client_id = os.environ.get('APP_ID', '')
+app_client_secret = os.environ.get('APP_PASSWORD', '')
+
 
 
 #####################################################################
