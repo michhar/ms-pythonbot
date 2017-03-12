@@ -17,4 +17,4 @@ if __name__ == '__main__':
     os.system('start /B celery -A server_flask.celery_app worker -l info')
 
     # Run flask app on port specified here
-    app.run(host='localhost', port=5000, debug=True)
+    app.run(host='localhost', port=3978, debug=True)
