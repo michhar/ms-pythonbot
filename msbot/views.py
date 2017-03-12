@@ -18,7 +18,7 @@ from msbot import app
 
 # Our main app page/route
 @app.route('/', methods=['GET', 'POST'])
-def home():
+def index():
     """Renders the home page which is the CNS of the web app currently, nothing pretty."""
     return render_template('index.html')
 
