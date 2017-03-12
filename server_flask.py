@@ -183,12 +183,12 @@ def not_found(error=None):
     return resp
 
 #####################################################################
-# Run main app
+# Run main app - Windows OS only!
 #####################################################################
 
 if __name__ == '__main__':
-    os.system('celery -A server_flask.celery_app worker &')
-    os.system('redis\\redis-server.exe redis.windows.conf &')
+    os.system('start /B celery -A server_flask.celery_app worker')
+    os.system('start /B redis\\redis-server.exe redis\\redis.windows.conf')
     app.run(host='127.0.0.1', port=5000, debug=True)
 
 
