@@ -8,7 +8,7 @@
 #####################################################################
 
 
-from flask import Flask, jsonify, request, url_for, redirect, Response
+from flask import Flask, jsonify, request, render_template, Response
 import re, json, datetime, os
 import requests
 
@@ -16,6 +16,11 @@ import http.client, urllib.request, urllib.parse, urllib.error, base64
 
 from msbot import app
 
+# Our main app page/route
+@app.route('/', methods=['GET', 'POST'])
+def home():
+    """Renders the home page which is the CNS of the web app currently, nothing pretty."""
+    return render_template('index.html')
 
 #####################################################################
 # Microsoft Application secrets (from BF registration process)
