@@ -59,18 +59,18 @@ celery_app = make_celery(app)
 
 
 #####################################################################
-# Create the respond function
+# Create the respond function to send message back to user
 #####################################################################
 
 def respond(serviceUrl,channelId,replyToId,fromData,
             recipientData,message,messageType,conversation):
 
-    # Comment out this part for deployment
-    url="https://login.microsoftonline.com/common/oauth2/v2.0/token"
+    # Authentication:  retrieving token from MSA service to help verify to BF Connector service
+    url = "https://login.microsoftonline.com/botframework.com/oauth2/v2.0/token"
     data = {"grant_type": "client_credentials",
             "client_id": app_client_id,
             "client_secret": app_client_secret,
-            "scope":"https://graph.microsoft.com/.default"
+            "scope": "https://api.botframework.com/.default"
            }
     response = requests.post(url, data)
     resData = response.json()
@@ -84,14 +84,14 @@ def respond(serviceUrl,channelId,replyToId,fromData,
     requests.post(
                     url=responseURL,
                     json={
-                    "type": "message",
+                    "type": messageType,
                     "text": message,
                     "locale": "en-US",
                     "from": fromData,
                     "timestamp": datetime.datetime.now().strftime("%Y-%m-%dT%H:%M:%S.%f%zZ"),
                     "localTimestamp": datetime.datetime.now().strftime("%Y-%m-%dT%H:%M:%S.%f%zZ"),
                     "replyToId": replyToId,
-                    "channelId": "emulator",
+                    "channelId": channelId,
                     "recipient": recipientData,
                     "conversation": conversation
                     },
@@ -139,7 +139,6 @@ def respondToClient(data):
         data["conversation"])
 
 def chatrespond(message):
-    messageback = ''
     if re.search('hi|hello|hey|howdy|hola', message):
         messageback = 'Hi there!'
     else:
