@@ -1,0 +1,4 @@
+Flask==0.12
+celery==4.0.2
+requests==2.12.4
+
