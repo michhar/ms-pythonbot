@@ -8,7 +8,7 @@
 #####################################################################
 
 
-from flask import Flask, jsonify, request, render_template, Response
+from flask import jsonify, request, render_template, Response
 import re, json, datetime, os
 import requests
 
@@ -20,7 +20,7 @@ from msbot import app
 @app.route('/', methods=['GET', 'POST'])
 def index():
     """Renders the home page which is the CNS of the web app currently, nothing pretty."""
-    return render_template('index.html')
+    return render_template('index.html', title='pythonbot')
 
 #####################################################################
 # Microsoft Application secrets (from BF registration process)
@@ -186,20 +186,6 @@ def not_found(error=None):
     resp.status_code = 404
 
     return resp
-
-#####################################################################
-# Run main app - Windows OS only!
-#####################################################################
-
-if __name__ == '__main__':
-    # Start redis server as broker for celery processes first
-    os.system('start /B redis\\redis-server.exe redis\\redis.windows.conf')
-
-    # Start celery for asynchronous task queues
-    os.system('start /B celery -A server_flask.celery_app worker -l info')
-
-    # Run flask app on port specified here
-    app.run(host='127.0.0.1', port=3978, debug=True)
 
 
 #####################################################################
