@@ -43,7 +43,7 @@ app_client_secret = os.environ.get('APP_PASSWORD', '')
 from celery import Celery
 
 def make_celery(myapp):
-    celery = Celery('server_flask', backend=myapp.config['CELERY_RESULT_BACKEND'],
+    celery = Celery('views', backend=myapp.config['CELERY_RESULT_BACKEND'],
                     broker=myapp.config['CELERY_BROKER_URL'])
     celery.conf.update(myapp.config)
     TaskBase = celery.Task
