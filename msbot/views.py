@@ -14,6 +14,8 @@ import requests
 
 import http.client, urllib.request, urllib.parse, urllib.error, base64
 
+from msbot import app
+
 
 #####################################################################
 # Microsoft Application secrets (from BF registration process)
@@ -25,8 +27,6 @@ app_client_secret = os.environ.get('APP_PASSWORD', '')
 #####################################################################
 # Create the Flask app
 #####################################################################
-
-app = Flask(__name__)
 
 #####################################################################
 # Add celery support for asynchronous behavior
