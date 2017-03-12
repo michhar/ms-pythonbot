@@ -193,7 +193,7 @@ if __name__ == '__main__':
     # Start celery for asynchronous task queues
     os.system('start /B celery -A server_flask.celery_app worker -l info')
 
-    # Run flask app on port specified
+    # Run flask app on port specified here
     app.run(host='127.0.0.1', port=5000, debug=True)
 
 
