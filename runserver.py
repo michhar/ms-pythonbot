@@ -1,5 +1,5 @@
 """
-This script runs the FlaskAppAML application using a development server.
+This script runs the ms-pythonbot application
 """
 
 import os
