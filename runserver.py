@@ -8,7 +8,7 @@ from msbot import app
 from sys import platform as _platform
 
 #####################################################################
-# Run main app - Windows OS only!
+# Run main app - Cross-platform compatibility
 #####################################################################
 
 if __name__ == '__main__':
