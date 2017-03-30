@@ -11,7 +11,8 @@
 from flask import jsonify, request, render_template, Response
 import re, json, datetime, os
 import requests
-
+import jwt
+from functools import wraps
 import http.client, urllib.request, urllib.parse, urllib.error, base64
 
 from msbot import app
@@ -151,10 +152,60 @@ def chatrespond(message):
 
 
 #####################################################################
+# Authentication method/wrapper with JWT tokens
+#####################################################################
+
+def jwt_authenticate(f):
+    @wraps(f)
+    def decorated(*args, **kwargs):
+        auth = request.headers.get('Authorization', '')
+        auth_token = auth.replace('Bearer ', '')
+
+        if app.config['DEBUG']:
+            open_id_json_url = 'https://login.microsoftonline.com/common/v2.0/.well-known/openid-configuration'
+            options = {'verify_signature': True,
+                       'verify_aud': False,
+                       'verify_iat': True, 'verify_exp': True,
+                       'verify_nbf': True, 'verify_iss': True,
+                       'verify_sub': True, 'verify_jti': True}
+        else:
+            open_id_json_url = 'https://login.botframework.com/v1/.well-known/openidconfiguration'
+            options = {'verify_signature': True,
+                       'verify_aud': False,
+                       'verify_iat': True, 'verify_exp': True,
+                       'verify_nbf': True, 'verify_iss': True,
+                       'verify_sub': True, 'verify_jti': True}
+        req = requests.get(open_id_json_url)
+        data = req.json()
+
+        jwks_uri = data['jwks_uri']
+        req = requests.get(jwks_uri)
+        data = req.json()
+        keys = data.get('keys')
+        valid = False
+        for key in keys:
+            try:
+                results = jwt.decode(auth_token, key=key, algorithms='RS256',
+                                     audience=app_client_id,
+                                     options=options)
+                valid = True
+                break
+            except:
+                pass
+
+        if not valid:
+            return Response('JWT Token Invalid', 401, {'WWWAuthenticate':'Basic realm="Login Required"'})
+
+        return f(*args, **kwargs)
+    return decorated
+
+
+#####################################################################
 # Main route for messaging
 #####################################################################
 
 @app.route('/api/messages', methods=['POST', 'GET'])
+@jwt_authenticate
 def messages():
     if request.method=="POST":
         # User message to bot

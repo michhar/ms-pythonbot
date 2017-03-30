@@ -12,4 +12,4 @@ app = Flask(__name__)
 
 import msbot.views
 
-
+app.config['DEBUG'] = True
