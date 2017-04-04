@@ -23,7 +23,6 @@ def index():
     """Renders the home page which is the CNS of the web app currently, nothing pretty."""
     return render_template('index.html', title='pythonbot')
 
-
 #####################################################################
 # Add celery support for asynchronous calls
 # (note: must also run celery worker and redis server for this example
@@ -59,8 +58,6 @@ celery_app = make_celery(app)
 
 app_client_id = os.environ.get('APP_ID', '')
 app_client_secret = os.environ.get('APP_PASSWORD', '')
-
-
 
 #####################################################################
 # Create the respond function to send message back to user
@@ -162,16 +159,16 @@ def jwt_authenticate(f):
         auth_token = auth.replace('Bearer ', '')
 
         if app.config['DEBUG']:
-            open_id_json_url = 'https://login.microsoftonline.com/common/v2.0/.well-known/openid-configuration'
+            open_id_json_url = 'https://login.microsoftonline.com/botframework.com/v2.0/.well-known/openid-configuration'
             options = {'verify_signature': True,
-                       'verify_aud': False,
+                       'verify_aud': True,
                        'verify_iat': True, 'verify_exp': True,
                        'verify_nbf': True, 'verify_iss': True,
                        'verify_sub': True, 'verify_jti': True}
         else:
             open_id_json_url = 'https://login.botframework.com/v1/.well-known/openidconfiguration'
             options = {'verify_signature': True,
-                       'verify_aud': False,
+                       'verify_aud': True,
                        'verify_iat': True, 'verify_exp': True,
                        'verify_nbf': True, 'verify_iss': True,
                        'verify_sub': True, 'verify_jti': True}
@@ -185,7 +182,7 @@ def jwt_authenticate(f):
         valid = False
         for key in keys:
             try:
-                results = jwt.decode(auth_token, key=key, algorithms='RS256',
+                results = jwt.decode(auth_token, key=key, algorithm='RS256',
                                      audience=app_client_id,
                                      options=options)
                 valid = True
