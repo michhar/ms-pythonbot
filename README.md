@@ -23,12 +23,12 @@ NOTE:  The flask app tests to see which OS the app is on and decides how to call
 ##### Unix
 
 1. Download redis for unix and build (https://redis.io/download)
-* Change the name of the redis folder to 'redisunix' under `ms-pythonbot` root folder so that the app can find it (thus it will have `redis-server` in the path `redisunix/src`).
+2. Change the name of the redis folder to 'redisunix' under `ms-pythonbot` root folder so that the app can find it (thus it will have `redis-server` in the path `redisunix/src`).
 
 ##### Windows
 
- 1.  Download and set up redis for windows (https://github.com/ServiceStack/redis-windows)
- * Change the name of the windows redis to 'rediswin' (thus it will have `redis-server.exe` in the path `rediswin\`).
+ 1. Download and set up redis for windows (https://github.com/ServiceStack/redis-windows)
+ 2. Change the name of the windows redis to 'rediswin' (thus it will have `redis-server.exe` in the path `rediswin\`).
 
 #### Check
 
@@ -45,9 +45,9 @@ This will start the Redis server as a message broker and the Celery program as a
 #### Test locally in emulator
 
 1. Open up the BF Emulator (usually called `botframework-emulator` on your system)
-* Click on the "Enter your endpoint URL" and select or type in `http://localhost:3978/api/messages`
-* Leave the "Microsoft App ID" and "Microsoft App Password" blank
-* Click "CONNECT"
+1. Click on the "Enter your endpoint URL" and select or type in `http://localhost:3978/api/messages`
+2. Leave the "Microsoft App ID" and "Microsoft App Password" blank unless you have these and have ngrok set up
+3. Click "CONNECT"
 
 You should see in the Log window a "conversationUpdate" appear twice with no errors.  If there's an error ensure you have the `runserver.py` script going.
 
