@@ -17,7 +17,7 @@ To test:
 """
 
 import os
-from test import app
+from msbot import app
 
 from sys import platform as _platform
 
@@ -32,15 +32,15 @@ if __name__ == '__main__':
     # Win
     if _platform.startswith("win"):
         # Start redis server as broker for celery processes first
-        os.system('start rediswin\\redis-server.exe rediswin\\redis.windows.conf')
+        os.system('start \B rediswin\\redis-server.exe rediswin\\redis.windows.conf')
         # Start celery for asynchronous task queues
-        os.system('start celery -A test.views.celery_app worker -l info')
+        os.system('start \B celery -A msbot.views.celery_app worker -l info')
     # Linus or Mac OSX
     else: #_platform.startswith("darwin") or _platform.startswith("linux" ):
         # Start redis server as broker for celery processes first
-        os.system('../redisunix/src/redis-server')
+        os.system('../redisunix/src/redis-server &')
         # Start celery for asynchronous task queues
-        os.system('celery -A test.views.celery_app worker -l info')
+        os.system('celery -A msbot.views.celery_app worker -l info &')
 
 
     # Run flask app on port specified here

@@ -16,7 +16,7 @@ import os
 import requests
 
 from celery import Celery
-from test import app, oidc
+from msbot import app, oidc
 
 #####################################################################
 # Add celery support for asynchronous calls
