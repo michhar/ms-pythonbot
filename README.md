@@ -14,7 +14,7 @@ A first stab at a Microsoft Bot Framework Python bot using the REST API.  See be
 
 ## How to run
 
-This example is a "Hi there!" and news fetching Python bot using the [Flask microframework](http://flask.pocoo.org/) to work with the Bot Framework on Azure or even just locally with the Bot Framework Emulator (recommended to use for testing and dev).
+This example is a "Hi there!" and Bing search Python bot using the [Flask microframework](http://flask.pocoo.org/) to work with the Bot Framework on Azure or even just locally with the Bot Framework Emulator (recommended to use for testing and dev).
 
 #### Setup
 
