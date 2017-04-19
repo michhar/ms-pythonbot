@@ -10,6 +10,8 @@ A first stab at a Microsoft Bot Framework Python bot using the REST API.  See be
 
 [Flask](http://flask.pocoo.org/) is the web app framework used here for message routing and where all of the bot logic is written.
 
+[Flask-OpenID](https://github.com/puiterwijk/flask-oidc) is used for authentication (decorates the routing function in the bot app - see code).
+
 ## How to run
 
 This example is a "Hi there!" and news fetching Python bot using the [Flask microframework](http://flask.pocoo.org/) to work with the Bot Framework on Azure or even just locally with the Bot Framework Emulator (recommended to use for testing and dev).
@@ -53,7 +55,7 @@ You should see in the Log window a "conversationUpdate" appear twice with no err
 
 ## TODO
 
-1.  Keep the messages from a bot to one worker on celer
+1.  Keep the messages from a bot to one worker on celery
 1.  Deploy to Azure
 2.  Generalize Flask integration for future bots
 3.  Explore other options than Celery for task queues (asyncio or Redis Queue)
