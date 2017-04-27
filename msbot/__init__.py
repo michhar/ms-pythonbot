@@ -8,7 +8,7 @@ The flask application package.
 
 
 from flask import Flask
-from flask.ext.oidc import OpenIDConnect
+from flask_oidc import OpenIDConnect
 import os
 import urllib.request
 

@@ -3,7 +3,6 @@ Flask app for testing the OpenID Connect extension.
 """
 from flask import Flask, jsonify, request, render_template, Response, g
 from flask_oidc import OpenIDConnect
-import pybotframework
 
 import http.client
 import urllib.request
