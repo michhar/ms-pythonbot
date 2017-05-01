@@ -66,7 +66,7 @@ def index():
         'Content-Type': 'application/json'
     }
 
-@app.route('/api/messages', methods=['POST'])
+@app.route('/api/messages', methods=['POST', 'GET'])
 @oidc.accept_token()
 def messages():
     if request.method == "POST":
@@ -85,7 +85,10 @@ def messages():
             mimetype='application/json',
             status=202
         )
-    return jsonify({'message': "Invalid request method"}), 405
+
+    return jsonify({'message': "Invalid request method"}), 405, {
+        'Content-Type': 'application/json'
+    }
 
 
 #####################################################################
