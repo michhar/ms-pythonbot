@@ -32,9 +32,9 @@ if __name__ == '__main__':
     # Win
     if _platform.startswith("win"):
         # Start redis server as broker for celery processes first
-        os.system('start rediswin\\redis-server.exe rediswin\\redis.windows.conf')
+        os.system('rediswin\\redis-server.exe rediswin\\redis.windows.conf')
         # Start celery for asynchronous task queues
-        os.system('start celery -A msbot.views.celery_app worker -l info')
+        os.system('celery -A msbot.views.celery_app worker -l info')
     # Linus or Mac OSX
     else: #_platform.startswith("darwin") or _platform.startswith("linux" ):
         # Start redis server as broker for celery processes first
