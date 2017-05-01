@@ -66,7 +66,7 @@ def index():
         'Content-Type': 'application/json'
     }
 
-@app.route('/api/messages', methods=['POST', 'GET'])
+@app.route('/api/messages', methods=['POST'])
 @oidc.accept_token()
 def messages():
     if request.method == "POST":
