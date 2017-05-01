@@ -44,4 +44,9 @@ if __name__ == '__main__':
 
 
     # Run flask app on port specified here
-    app.run(host='localhost', port=3978, debug=True)
+    HOST = os.environ.get('SERVER_HOST', 'localhost')
+    try:
+        PORT = int(os.environ.get('SERVER_PORT', '5555'))
+    except ValueError:
+        PORT = 5555
+    app.run(HOST, PORT, debug=True)
