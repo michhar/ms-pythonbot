@@ -1,6 +1,5 @@
-.skipPythonDeployment
-venv
-env
+# .skipPythonDeployment
+# env
 dump.rdb
 rediswin
 
