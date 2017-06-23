@@ -14,8 +14,10 @@ import re
 import os
 import requests
 
-from celery import Celery
-from msbot import app, oidc
+# from celery import Celery
+from msbot import app, oidc, app_backend
+from .callback_utils import Output, Input
+
 
 #####################################################################
 # Add celery support for asynchronous calls
@@ -33,27 +35,27 @@ from msbot import app, oidc
 #     return render_template('index.html', title='pythonbot')
 
 
-def make_celery(myapp):
-    celery = Celery('views', backend=myapp.config['CELERY_RESULT_BACKEND'],
-                    broker=myapp.config['CELERY_BROKER_URL'])
-    celery.conf.update(myapp.config)
-    TaskBase = celery.Task
+# def make_celery(myapp):
+#     celery = Celery('views', backend=myapp.config['CELERY_RESULT_BACKEND'],
+#                     broker=myapp.config['CELERY_BROKER_URL'])
+#     celery.conf.update(myapp.config)
+#     TaskBase = celery.Task
 
-    class ContextTask(TaskBase):
-        abstract = True
+#     class ContextTask(TaskBase):
+#         abstract = True
 
-        def __call__(self, *args, **kwargs):
-            with myapp.app_context():
-                return TaskBase.__call__(self, *args, **kwargs)
-    celery.Task = ContextTask
-    return celery
+#         def __call__(self, *args, **kwargs):
+#             with myapp.app_context():
+#                 return TaskBase.__call__(self, *args, **kwargs)
+#     celery.Task = ContextTask
+#     return celery
 
 
-app.config.update(
-    CELERY_BROKER_URL='redis://localhost:6379',
-    CELERY_RESULT_BACKEND='redis://localhost:6379'
-)
-celery_app = make_celery(app)
+# app.config.update(
+#     CELERY_BROKER_URL='redis://localhost:6379',
+#     CELERY_RESULT_BACKEND='redis://localhost:6379'
+# )
+# celery_app = make_celery(app)
 
 #####################################################################
 # Main route for messaging
@@ -67,6 +69,7 @@ def index():
     }
 
 @app.route('/api/messages', methods=['POST', 'GET'])
+@app_backend.callback(Output('id', 'value'))
 @oidc.accept_token()
 def messages():
     if request.method == "POST":
@@ -81,10 +84,10 @@ def messages():
             # The bot responds to the user
             respondToClient.delay(data)
 
-        return Response(
-            mimetype='application/json',
-            status=202
-        )
+        # return Response(
+        #     mimetype='application/json',
+        #     status=202
+        # )
 
     return jsonify({'message': "Invalid request method"}), 405, {
         'Content-Type': 'application/json'
@@ -122,7 +125,7 @@ def respond(serviceUrl, channelId, replyToId, fromData,
         }
     )
 
-@celery_app.task
+# @celery_app.task
 def initiateChat(data):
     membersAdded = data["membersAdded"]
     fromID = data["from"]["id"]
@@ -145,7 +148,7 @@ def initiateChat(data):
         data["conversation"])
 
 
-@celery_app.task
+# @celery_app.task
 def respondToClient(data):
     generalID = data["id"]
     message = data["text"]

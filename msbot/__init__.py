@@ -33,4 +33,6 @@ config = {'OIDC_CLIENT_SECRETS': auth_config,
 app.config.update(config)
 oidc = OpenIDConnect(app)
 
+app_backend = Callbacks()
+
 import msbot.views
