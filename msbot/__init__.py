@@ -11,6 +11,7 @@ from flask import Flask
 from flask_oidc import OpenIDConnect
 import os
 import urllib.request
+from .callback_utils import Callbacks
 
 app = Flask(__name__)
 

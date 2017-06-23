@@ -79,10 +79,10 @@ def messages():
         # Async methods run as tasks with celery backend
         if data["type"] == "conversationUpdate":
             # Add the members to the conversation
-            initiateChat.delay(data)
+            initiateChat(data)
         else:
             # The bot responds to the user
-            respondToClient.delay(data)
+            respondToClient(data)
 
         # return Response(
         #     mimetype='application/json',
