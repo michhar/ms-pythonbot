@@ -9,28 +9,19 @@ The flask application package.
 
 from flask import Flask
 from flask_oidc import OpenIDConnect
-import os
-import urllib.request
 from .callback_utils import Callbacks
+import os
+
 
 app = Flask(__name__)
-
 app.config['DEBUG'] = True
 
 cwd = os.getcwd()
-# auth_config = os.path.join(cwd, 'auth_config.json')
-url = 'https://gist.githubusercontent.com/michhar/d51d5fa5d4a3ec8f9b73e9d47db906b4/raw/5be225f0d700c196fb8df12af7a80915d330530a/auth_config.json'
-file_name = os.path.join(cwd, 'msbot', 'auth_config.json')
-# Download the file from `url` and save it locally under `file_name`:
-with urllib.request.urlopen(url) as response, open(file_name, 'wb') as out_file:
-    data = response.read() # a `bytes` object
-    out_file.write(data)
+auth_config = os.path.join(cwd, 'auth_config.json')
 
-auth_config = file_name
 config = {'OIDC_CLIENT_SECRETS': auth_config,
-'OIDC_SCOPES': ["https://api.botframework.com/.default", 'openid'],
-'OIDC_RESOURCE_SERVER_ONLY': True,
-'OIDC_INTROSPECTION_AUTH_METHOD': 'bearer'}
+          'OIDC_SCOPES': ["https://api.botframework.com/.default"],
+          'OIDC_RESOURCE_SERVER_ONLY': True}
 
 app.config.update(config)
 oidc = OpenIDConnect(app)
