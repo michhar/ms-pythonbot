@@ -1,8 +1,7 @@
 
-.skipPythonDeployment
+#.skipPythonDeployment
 env
 dump.rdb
-rediswin
 
 auth_config.json
 
