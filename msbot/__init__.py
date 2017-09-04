@@ -18,16 +18,17 @@ app = Flask(__name__)
 app.config['DEBUG'] = True
 
 cwd = os.getcwd()
+auth_config_tmpl = os.path.join(cwd, 'msbot', 'auth_config_template.json')
 auth_config = os.path.join(cwd, 'auth_config.json')
 
 
-with open(auth_config, 'w+') as data_file:
+with open(auth_config_tmpl, 'r') as data_file:
     data = json.load(data_file)
-    data['client_id'] = os.getenv('CLIENT_ID', 'foo')
-    data['client_secret'] = os.getenv('CLIENT_SECRET', 'bar')
+    data['web']['client_id'] = os.getenv('CLIENT_ID', 'foo')
+    data['web']['client_secret'] = os.getenv('CLIENT_SECRET', 'bar')
     print(data)
-    json.dumps(data, data_file)
-# auth_config = os.path.join(cwd + '/msbot/', 'auth_config_true.json')
+    with open(auth_config, 'w') as auth:
+        json.dump(data, auth)
 
 
 config = {'OIDC_CLIENT_SECRETS': auth_config,

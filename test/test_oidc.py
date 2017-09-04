@@ -21,7 +21,7 @@ def create_app(config, oidc_overrides=None):
 
 if __name__ == '__main__':
     APP = create_app({
-        'OIDC_CLIENT_SECRETS': './auth_config.json',
+        'OIDC_CLIENT_SECRETS': './auth_config_template.json',
         'OIDC_SCOPES': ["https://api.botframework.com/.default"],
         'OIDC_RESOURCE_SERVER_ONLY': True})
     APP.run(host="127.0.0.1", port=8080, debug=True)
