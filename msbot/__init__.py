@@ -19,13 +19,16 @@ app.config['DEBUG'] = True
 
 cwd = os.getcwd()
 auth_config_tmpl = os.path.join(cwd, 'msbot', 'auth_config_template.json')
+auth_config = os.path.join('..', cwd, 'auth_config.json')
+
+# For unix compatibility
 auth_config = os.path.join(cwd, 'auth_config.json')
 
 
 with open(auth_config_tmpl, 'r') as data_file:
     data = json.load(data_file)
-    data['web']['client_id'] = os.getenv('CLIENT_ID', 'foo')
-    data['web']['client_secret'] = os.getenv('CLIENT_SECRET', 'bar')
+    data['web']['client_id'] = os.getenv('MICROSOFT_CLIENT_ID', 'foo')
+    data['web']['client_secret'] = os.getenv('MICROSOFT_CLIENT_SECRET', 'bar')
     print(data)
     with open(auth_config, 'w') as auth:
         json.dump(data, auth)
