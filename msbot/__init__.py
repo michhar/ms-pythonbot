@@ -8,45 +8,40 @@ The flask application package.
 
 
 from flask import Flask
-from flask_oidc import OpenIDConnect
 from .callback_utils import Callbacks
 import os
-import json
-from sys import platform as _platform
+from flask_pyoidc.flask_pyoidc import OIDCAuthentication
 
 
 app = Flask(__name__)
-app.config['DEBUG'] = True
 
-cwd = os.getcwd()
-auth_config_tmpl = ''
-auth_config = ''
-# Windows uses relative paths
-if _platform.startswith("win"):
-    auth_config_tmpl = os.path.join('auth_config_template.json')
-    auth_config = os.path.join('..', 'auth_config.json')
-else:
-    auth_config_tmpl = os.path.join(cwd, 'msbot', 'auth_config_template.json')
-    auth_config = os.path.join(cwd, 'auth_config.json')
+### Flask-pyoidc ###
 
-# For unix compatibility
-
-data = {}
-with open(auth_config_tmpl, 'r') as data_file:
-    data = json.load(data_file)
-    data['web']['client_id'] = os.getenv('MICROSOFT_CLIENT_ID', 'foo')
-    data['web']['client_secret'] = os.getenv('MICROSOFT_CLIENT_SECRET', 'bar')
-with open(auth_config, 'w') as auth:
-    json.dump(data, auth)
-
-
-config = {'OIDC_CLIENT_SECRETS': auth_config,
-          'OIDC_SCOPES': ["https://api.botframework.com/.default"],
-          'OIDC_RESOURCE_SERVER_ONLY': True,
-          }
-
+config = {
+          'SERVER_NAME': 'localhost:3978',
+          'SECRET_KEY': 'dev',
+          'DEBUG': True
+         }
 app.config.update(config)
-oidc = OpenIDConnect(app)
+
+client_info = {
+            'client_id': os.getenv('MICROSOFT_CLIENT_ID', 'foo'),
+            'client_secret': os.getenv('MICROSOFT_CLIENT_SECRET', 'bar'),
+
+}
+
+provider_config = {
+            'issuer': 'https://login.microsoftonline.com',
+            'authorization_endpoint': 'https://login.microsoftonline.com/common/oauth2/v2.0/authorize',
+            'token_endpoint': 'https://login.microsoftonline.com/common/oauth2/v2.0/token',
+            'userinfo_endpoint': 'https://login.microsoftonline.com/botframework.com/oauth2/v2.0/token',
+            'grant_type': 'client_credentials',
+            'scope': 'https://api.botframework.com/.default'
+}
+
+auth = OIDCAuthentication(app,
+                          provider_configuration_info=provider_config,
+                          client_registration_info=client_info)
 
 app_backend = Callbacks()
 

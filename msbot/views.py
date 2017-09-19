@@ -1,9 +1,9 @@
 """
 Flask app for testing the OpenID Connect extension.
 """
-from flask import jsonify, request
+from flask import jsonify, request, render_template
 
-from msbot import app, app_backend, oidc
+from msbot import app, app_backend, auth
 from .callback_utils import Input, Output
 from .callback_utils import build_response, build_conversation_update
 
@@ -11,9 +11,12 @@ from .callback_utils import build_response, build_conversation_update
 # Main routes for messaging
 #####################################################################
 
+@app.errorhandler(404)
+def page_not_found(e):
+    return render_template('404.html'), 404
 
 @app.route('/')
-@oidc.accept_token()
+@auth.oidc_auth
 def index():
     """
     Main route.
@@ -26,7 +29,6 @@ def index():
 
 
 @app.route('/api/messages', methods=['POST', 'GET'])
-@oidc.accept_token()
 @app_backend.callback(Output('url',
                              'reply_to_id',
                              'id_var',
