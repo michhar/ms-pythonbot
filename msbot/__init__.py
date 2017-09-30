@@ -17,10 +17,10 @@ app = Flask(__name__)
 
 ### Flask-pyoidc ###
 
-PORT = int(os.getenv('SERVER_PORT', '3978'))
+PORT = os.getenv('SERVER_PORT', '3978')
 
 config = {
-          'SERVER_NAME': os.getenv('SERVER_NAME', 'localhost') + ':' + PORT,
+          'SERVER_NAME': os.getenv('SERVER_NAME', 'mydomain.net') + ':' + PORT,
           'SECRET_KEY': 'dev',
           'PREFERRED_URL_SCHEME': 'https',
           'DEBUG': True
