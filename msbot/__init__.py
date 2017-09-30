@@ -37,7 +37,7 @@ provider_config = {
             'authorization_endpoint': 'https://login.microsoftonline.com/common/oauth2/v2.0/authorize',
             # 'authorization_endpoint': "https://login.botframework.com/v1/.well-known/openid-configuration",
             'token_endpoint': 'https://login.microsoftonline.com/common/oauth2/v2.0/token',
-            'userinfo_endpoint': 'https://login.microsoftonline.com/botframework.com/oauth2/v2.0/userinfo',
+            'userinfo_endpoint': 'https://login.microsoftonline.com/common/oauth2/v2.0/userinfo',
             # 'userinfo_endpoint': "https://login.botframework.com/v1/.well-known/openid-configuration",
             # 'grant_type': 'client_credentials',
             # 'scope': 'https://api.botframework.com/.default'
