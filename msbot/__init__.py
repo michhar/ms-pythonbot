@@ -29,6 +29,7 @@ app.config.update(config)
 client_info = {
             'client_id': os.getenv('MICROSOFT_CLIENT_ID', 'foo'),
             'client_secret': os.getenv('MICROSOFT_CLIENT_SECRET', 'bar'),
+            'scope': 'https://api.botframework.com/.default'
 
 }
 
