@@ -29,17 +29,15 @@ app.config.update(config)
 client_info = {
             'client_id': os.getenv('MICROSOFT_CLIENT_ID', 'foo'),
             'client_secret': os.getenv('MICROSOFT_CLIENT_SECRET', 'bar'),
-            'scope': 'https://api.botframework.com/.default'
+            # 'scope': 'https://api.botframework.com/.default'
 
 }
 
 provider_config = {
-            'issuer': 'https://login.microsoftonline.com',
+            'issuer': 'https://api.botframework.com',
             'authorization_endpoint': 'https://login.microsoftonline.com/common/oauth2/v2.0/authorize',
-            # 'authorization_endpoint': "https://login.botframework.com/v1/.well-known/openid-configuration",
             'token_endpoint': 'https://login.microsoftonline.com/common/oauth2/v2.0/token',
             'userinfo_endpoint': 'https://login.microsoftonline.com/common/oauth2/v2.0/userinfo',
-            # 'userinfo_endpoint': "https://login.botframework.com/v1/.well-known/openid-configuration",
             # 'grant_type': 'client_credentials',
             # 'scope': 'https://api.botframework.com/.default'
 }
