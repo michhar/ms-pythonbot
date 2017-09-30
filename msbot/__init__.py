@@ -17,8 +17,10 @@ app = Flask(__name__)
 
 ### Flask-pyoidc ###
 
+PORT = int(os.getenv('SERVER_PORT', '3978'))
+
 config = {
-          'SERVER_NAME': os.getenv('SERVER_NAME', 'localhost'),
+          'SERVER_NAME': os.getenv('SERVER_NAME', 'localhost') + ':' + PORT,
           'SECRET_KEY': 'dev',
           'PREFERRED_URL_SCHEME': 'https',
           'DEBUG': True
@@ -29,8 +31,7 @@ app.config.update(config)
 client_info = {
             'client_id': os.getenv('MICROSOFT_CLIENT_ID', 'foo'),
             'client_secret': os.getenv('MICROSOFT_CLIENT_SECRET', 'bar'),
-            # 'scope': 'https://api.botframework.com/.default'
-
+            'scope': 'https://api.botframework.com/.default'
 }
 
 provider_config = {
