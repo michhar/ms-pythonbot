@@ -29,6 +29,7 @@ def index():
 
 
 @app.route('/api/messages', methods=['POST', 'GET'])
+@auth.oidc_auth
 @app_backend.callback(Output('url',
                              'reply_to_id',
                              'id_var',
