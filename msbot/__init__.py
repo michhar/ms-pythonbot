@@ -18,10 +18,11 @@ app = Flask(__name__)
 ### Flask-pyoidc ###
 
 config = {
-          'SERVER_NAME': 'localhost:3978',
+          'SERVER_NAME': os.getenv('SERVER_NAME', 'localhost'),
           'SECRET_KEY': 'dev',
           'DEBUG': True
          }
+
 app.config.update(config)
 
 client_info = {
