@@ -13,9 +13,13 @@ from .callback_utils import build_response, build_conversation_update
 
 @app.errorhandler(404)
 def page_not_found(e):
-    return render_template('404.html'), 404
+    return render_template('404.html', e=e), 404
 
-@app.route('/')
+@app.errorhandler(500)
+def internal_server_error(e):
+    return render_template('500.html', e=e), 500
+
+@app.route('/', methods=['POST', 'GET'])
 @auth.oidc_auth
 def index():
     """

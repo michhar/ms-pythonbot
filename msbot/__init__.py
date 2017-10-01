@@ -20,7 +20,7 @@ app = Flask(__name__)
 PORT = os.getenv('SERVER_PORT', '3978')
 
 config = {
-          'SERVER_NAME': os.getenv('SERVER_NAME', 'mydomain.net') + ':' + PORT,
+          'SERVER_NAME': os.getenv('SERVER_NAME', 'localhost'), # + ':' + PORT,
           'SECRET_KEY': 'dev',
           'PREFERRED_URL_SCHEME': 'https',
           'DEBUG': True
@@ -36,11 +36,11 @@ client_info = {
 
 provider_config = {
             'issuer': 'https://api.botframework.com',
-            'authorization_endpoint': 'https://login.microsoftonline.com/common/oauth2/v2.0/authorize',
-            'token_endpoint': 'https://login.microsoftonline.com/common/oauth2/v2.0/token',
-            'userinfo_endpoint': 'https://login.microsoftonline.com/common/oauth2/v2.0/userinfo',
+            'authorization_endpoint': 'https://login.microsoftonline.com/botframework.com/oauth2/v2.0/token',
+            'token_endpoint': 'https://login.microsoftonline.com/botframework.com/oauth2/v2.0/token',
+            # 'userinfo_endpoint': 'https://login.microsoftonline.com/common/oauth2/v2.0/userinfo',
             # 'grant_type': 'client_credentials',
-            # 'scope': 'https://api.botframework.com/.default'
+            'scope': 'https://api.botframework.com/.default'
 }
 
 auth = OIDCAuthentication(app,
