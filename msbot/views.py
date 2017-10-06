@@ -19,8 +19,12 @@ def page_not_found(e):
 def internal_server_error(e):
     return render_template('500.html', e=e), 500
 
+@app.errorhandler(503)
+def internal_server_error(e):
+    return render_template('503.html', e=e), 503
+
 @app.route('/', methods=['POST', 'GET'])
-@auth.oidc_auth
+# @auth.oidc_auth
 def index():
     """
     Main route.
